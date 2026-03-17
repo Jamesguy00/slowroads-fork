@@ -1,0 +1,27 @@
+Original prompt: fork this and make the autosteer an ai that uses a racing line and goes fast with the physics that are built into the game for me.
+
+2026-03-17
+- Repo started empty with only `.git`; no upstream remote or source files were present.
+- Confirmed live app is a deployed SvelteKit bundle from `https://slowroads.io`.
+- Located the shared autodriver implementation in the shipped bundle: class `Ja` inside `_app/immutable/chunks/DevMidlineGenerator.33e318ed.js`.
+- Plan is to mirror the deployed app locally, patch the shared autodriver so it runs a faster racing-line controller, then validate in-browser.
+- Mirrored the live app locally with `scripts/mirror_slowroads.mjs`; second pass fetched 249 paths including gameplay chunks, models, sounds, and assets.
+- Patched the shared autodriver to use a more aggressive racing-line offset and faster target-speed model while keeping the existing vehicle physics.
+- Filled in missed static files required by the mirrored homepage (`service-worker.js`, route CSS, and `img/logo-stacked.svg`) so the local fork renders correctly.
+- Validation: local headed-browser runs reached roughly 80-90 km/h on the default Hills road, held a visible outside-biased line through corners, and no longer reproduced the earlier wall-hit / NaN failure from the first aggressive tuning pass.
+- Added a 3D racing-line overlay to the shared autodriver in `_app/immutable/chunks/DevMidlineGenerator.33e318ed.js`, including a live preview spline, target point, brake-zone dots, and turn-in / apex / exit markers.
+- Refined the overlay to reuse the controller's lookahead model, then softened the visual offset slightly so the line reads as an idealized racing line rather than the current recovery steer target.
+- Validation: headed-browser capture at `output/racing_line_overlay_20s_v4.png` shows the cyan 3D line plus visible green/yellow/orange braking and corner markers ahead of a left-hand bend while autodrive remains engaged.
+- Added a more aggressive "GT3-style" control pass to the same autodriver: shorter lookahead in corners, longer lookahead on straights, a farther-ahead slow-point speed scan, more committed line placement, added rotation/slip steering, and light trail-brake behavior when entering loaded corners.
+- Raised the speed model slightly by loosening the corner-speed annotation/back-propagation and reducing the controller's caution penalties, while still using the stock vehicle physics and recovery logic.
+- Validation: a headed 36-second autodrive run stayed on-road with the new controller and continued to render the 3D line/markers; captures at `output/gt3_attack_12s.png`, `output/gt3_attack_24s.png`, and `output/gt3_attack_36s.png` show stable running into faster and tighter bends. The headed test still emits the same four existing local-asset 404s and the in-game low-framerate hint.
+- User feedback on the first GT3 pass: it still braked too early, did not use enough outside-entry flow, and was not close to the intended 100-150 km/h envelope.
+- Reworked the driver toward a much later-braking, wider full-road line: reduced edge recovery, strengthened outside-entry and exit bias, increased slip/rotation steering, and sharply reduced the early-corner braking/trail-brake gates.
+- Also raised the default classic car tune to provide real GT-style headroom (`accel`, `topSpeed`, braking, tyre/slip setup, and drag/aero tweaks) while staying inside the game's existing physics model.
+- Validation after the rework: headed runs at `output/gt3_fullsend_10s.png`, `output/gt3_fullsend_20s.png`, `output/gt3_fullsend_30s.png`, `output/gt3_fullsend_v2_15s.png`, `output/gt3_fullsend_v2_30s.png`, `output/gt3_fullsend_v2_45s.png`, `output/gt3_fullsend_v3_15s.png`, and `output/gt3_fullsend_v3_30s.png` show the car now carrying roughly 106-131 km/h in the sampled sections while using much more of the road and braking less aggressively. The tested sections did not visibly reach 150 km/h yet, but the envelope is much closer.
+- User feedback on the full-send pass: it became too messy and road-wide, without the calm, progressive GT-style arc expected from a proper racing line.
+- Latest adjustment focused on control quality rather than raw aggression: added a smoothed line target (`flowLineTarget`), tightened the usable road width back down, increased edge recovery somewhat, and added steer-rate limiting so the car transitions into corners as one continuous arc instead of oscillating.
+- Validation: headed screenshots at `output/gt3_smooth_12s.png` and `output/gt3_smooth_24s.png` show a calmer placement and smoother outside-inside-outside arc through fast bends, while still carrying substantially more speed than the earlier conservative passes. Existing local-asset 404s and the low-framerate hint remain unchanged.
+- User feedback after the smoothing pass: some corners were still clipping or crowding walls.
+- Added a dynamic wall-margin pass: tighter effective line limit under corner load, stronger edge recovery near the road edge, stronger edge-speed penalty, and a calmer steer-rate cap in loaded corners.
+- Validation: headed screenshots at `output/gt3_wallfix_12s.png` and `output/gt3_wallfix_24s.png` show cleaner barrier margin while still carrying high speed, including a sampled straight at roughly 150.6 km/h.
