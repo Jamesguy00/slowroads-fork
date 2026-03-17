@@ -14,14 +14,14 @@
 			object-src 'none';
 		"> -->
 
-		<link rel="icon" href="/favicon.svg" />
+		<link rel="icon" href="favicon.svg" />
 		<link rel="apple-touch-icon" href="apple-touch-icon.png">
 		<!-- <link rel="icon" href="/favicon_dark.svg" type="image/x-icon" media="(prefers-color-scheme: dark)"> -->
 		<!-- <link rel="icon" href="/favicon_light.svg" type="image/x-icon" media="(prefers-color-scheme: light)"> -->
-		<link rel="preload" href="/fonts/Sono.ttf" as="font" type="font/ttf" crossorigin>
-		<link rel="preload" href="/fonts/Space.ttf" as="font" type="font/ttf" crossorigin>
+		<link rel="preload" href="fonts/Sono.ttf" as="font" type="font/ttf" crossorigin>
+		<link rel="preload" href="fonts/Space.ttf" as="font" type="font/ttf" crossorigin>
 
-		<link rel="manifest" href="/manifest.json">
+		<link rel="manifest" href="manifest.json">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
 		<meta name="theme-color" content="#ffffff">
@@ -34,14 +34,14 @@
 		<meta property="og:url" content="https://slowroads.io/">
 		<meta property="og:title" content="Slow Roads">
 		<meta property="og:description" content="Endless driving zen">
-		<meta property="og:image" content="/meta-2.0.0.jpg">
+		<meta property="og:image" content="meta-2.0.0.jpg">
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image">
 		<meta property="twitter:url" content="https://slowroads.io/">
 		<meta property="twitter:title" content="Slow Roads">
 		<meta property="twitter:description" content="Endless driving zen">
-		<meta property="twitter:image" content="/meta-2.0.0.jpg">
+		<meta property="twitter:image" content="meta-2.0.0.jpg">
 
 		<title>&#8202;s&#8202;l&#8202;o&#8202;w&nbsp;&nbsp;r&#8202;o&#8202;a&#8202;d&#8202;s</title>
 
@@ -105,13 +105,13 @@
 
 			@font-face {
 				font-family: Sono;
-				src: url(/fonts/Sono.ttf);
+				src: url(fonts/Sono.ttf);
 				font-variant: slashed-zero;
 			}
 
 			@font-face {
 				font-family: Space;
-				src: url(/fonts/Space.ttf);
+				src: url(fonts/Space.ttf);
 				font-variant: slashed-zero;
 			}
 
@@ -190,38 +190,38 @@
 
 		</style>
 
-		<script src="/alea.min.js"></script>
+		<script src="alea.min.js"></script>
 
 		
-		<link rel="modulepreload" href="/_app/immutable/entry/start.0d706404.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/scheduler.05185c5f.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/singletons.0fb222fd.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/index.205d685d.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/control.c2cf8273.js">
-		<link rel="modulepreload" href="/_app/immutable/entry/app.21ab72c4.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/index.2e86b85f.js">
+		<link rel="modulepreload" href="_app/immutable/entry/start.0d706404.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/scheduler.05185c5f.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/singletons.0fb222fd.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/index.205d685d.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/control.c2cf8273.js">
+		<link rel="modulepreload" href="_app/immutable/entry/app.21ab72c4.js">
+		<link rel="modulepreload" href="_app/immutable/chunks/index.2e86b85f.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">
 			<script>
 				{
 					__sveltekit_feqks6 = {
-						base: "",
+						base: "/slowroads-fork",
 						env: {"PUBLIC_DRIFTMAS":"false","PUBLIC_ELECTRON":"false"}
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("/_app/immutable/entry/start.0d706404.js"),
-						import("/_app/immutable/entry/app.21ab72c4.js")
+						import("./_app/immutable/entry/start.0d706404.js"),
+						import("./_app/immutable/entry/app.21ab72c4.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
 
 					if ('serviceWorker' in navigator) {
 						addEventListener('load', function () {
-							navigator.serviceWorker.register('/service-worker.js');
+							navigator.serviceWorker.register('./service-worker.js');
 						});
 					}
 				}
